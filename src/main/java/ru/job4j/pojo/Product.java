@@ -8,4 +8,9 @@ public class Product {
         this.name = name;
         this.count = count;
     }
+
+    public String getName() {
+        return name;
+    }
 }
+
