@@ -40,6 +40,7 @@ public class Tracker {
         if (index == -1) {
             return false;
         }
+
         item.setId(id);
         items[index] = item;
         return true;
@@ -50,6 +51,7 @@ public class Tracker {
         if (index == -1) {
             return false;
         }
+
         System.arraycopy(items, index + 1, items, index, size - index - 1);
         items[size - 1] = null;
         size--;
