@@ -31,7 +31,7 @@ public class Library {
 
         for (int i = 0; i < books.length; i++) {
             Book b = books[i];
-            if (b.getName().equals("Clean code")) {
+            if ("Clean code".equals(b.getName())) {
                 System.out.println("Название книги: " + b.getName() + ", количество страниц: " + b.getCount());
             }
         }
