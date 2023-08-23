@@ -9,5 +9,8 @@ public class StartUI {
     public static void main(String[] args) {
         Item item = new Item();
         System.out.println(item.getCreated().format(FORMATTER));
+
+        Item item2 = new Item();
+        System.out.println(item2);
     }
 }
