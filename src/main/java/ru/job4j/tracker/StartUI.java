@@ -1,16 +1,40 @@
 package ru.job4j.tracker;
 
-import java.time.format.DateTimeFormatter;
+import java.util.Scanner;
 
 public class StartUI {
 
-    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd-MMMM-EEEE-yyyy HH:mm:ss");
+    private static final String[] MENU = {
+            "Add new Item", "Show all items", "Edit item",
+            "Delete item", "Find item by id", "Find items by name",
+            "Exit Program"};
+
+    public void init(Scanner scanner, Tracker tracker) {
+        boolean run = true;
+        while (run) {
+            showMenu();
+            System.out.print("Select: ");
+            int select = Integer.parseInt(scanner.nextLine());
+            if (select != 6) {
+                System.out.println("Пользователь выбрал: " + select);
+            } else {
+                run = false;
+            }
+        }
+    }
+
+    private void showMenu() {
+        System.out.println("Menu:");
+        for (int i = 0; i < MENU.length; i++) {
+            System.out.println(i + ". " + MENU[i]);
+        }
+        System.out.println();
+    }
 
     public static void main(String[] args) {
-        Item item = new Item();
-        System.out.println(item.getCreated().format(FORMATTER));
-
-        Item item2 = new Item();
-        System.out.println(item2);
+        Scanner scanner = new Scanner(System.in);
+        Tracker tracker = new Tracker();
+        new StartUI().init(scanner, tracker);
     }
 }
+
