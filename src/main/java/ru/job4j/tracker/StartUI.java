@@ -15,11 +15,7 @@ public class StartUI {
             showMenu();
             int select = input.askInt("Select: ");
             if (select == 0) {
-                System.out.println("=== Create a new Item ===");
-                String name = input.askStr("Enter name: ");
-                Item item = new Item(name);
-                tracker.add(item);
-                System.out.println("Добавленная заявка: " + item);
+                createItem(input, tracker);
             } else if (select == 1) {
                 System.out.println("=== Show all items ===");
                 Item[] items = tracker.findAll();
@@ -73,6 +69,14 @@ public class StartUI {
                 run = false;
             }
         }
+    }
+
+    public static void createItem(Input input, Tracker tracker) {
+        System.out.println("=== Create a new Item ===");
+        String name = input.askStr("Enter name: ");
+        Item item = new Item(name);
+        tracker.add(item);
+        System.out.println("Добавленная заявка: " + item);
     }
 
     private void showMenu() {
