@@ -7,5 +7,4 @@ public class College {
         Student student = freshman;
         Object obj = freshman;
     }
-    // Такое приведение типов называется повышающим (up casting).
 }
