@@ -50,7 +50,7 @@ public class StartUI {
         }
     }
 
-    public void editItem(Input input, Tracker tracker) {
+    public static void editItem(Input input, Tracker tracker) {
         System.out.println("=== Edit item ===");
         int id = input.askInt("Enter id: ");
         String name = input.askStr("Enter name: ");
