@@ -4,7 +4,7 @@ import ru.job4j.tracker.Tracker;
 import ru.job4j.tracker.input.Input;
 import ru.job4j.tracker.model.Item;
 
-public class ReplaceAction implements UserAction {
+public class EditAction implements UserAction {
     @Override
     public String name() {
         return "Edit item";
