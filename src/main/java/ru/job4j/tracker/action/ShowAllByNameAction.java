@@ -15,12 +15,12 @@ public class ShowAllByNameAction implements UserAction {
 
     @Override
     public String name() {
-        return "Find items by name";
+        return "Show all items by name";
     }
 
     @Override
     public boolean execute(Input input, Tracker tracker) {
-        output.println("=== Find items by name ===");
+        output.println("=== Show all items by name ===");
         String name = input.askStr("Enter name: ");
         Item[] items = tracker.findByName(name);
         if (items.length > 0) {

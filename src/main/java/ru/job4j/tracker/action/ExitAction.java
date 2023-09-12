@@ -2,8 +2,16 @@ package ru.job4j.tracker.action;
 
 import ru.job4j.tracker.Tracker;
 import ru.job4j.tracker.input.Input;
+import ru.job4j.tracker.output.Output;
 
 public class ExitAction implements UserAction {
+
+    private final Output output;
+
+    public ExitAction(Output output) {
+        this.output = output;
+    }
+
     @Override
     public String name() {
         return "Exit";
@@ -11,6 +19,7 @@ public class ExitAction implements UserAction {
 
     @Override
     public boolean execute(Input input, Tracker tracker) {
+        output.println("=== Exit ===");
         return false;
     }
 }

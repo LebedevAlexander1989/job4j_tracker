@@ -17,12 +17,12 @@ public class ShowByIdAction implements UserAction {
 
     @Override
     public String name() {
-        return "Find item by id";
+        return "Show item by id";
     }
 
     @Override
     public boolean execute(Input input, Tracker tracker) {
-        output.println("=== Find item by id ===");
+        output.println("=== Show item by id ===");
         int id = input.askInt("Enter id: ");
         Item item = tracker.findById(id);
         output.println(Objects.requireNonNullElseGet(item, () -> "Заявка с введенным id: " + id + " ,не найдена."));

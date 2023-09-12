@@ -9,10 +9,16 @@ import ru.job4j.tracker.model.Item;
 import ru.job4j.tracker.output.Output;
 import ru.job4j.tracker.output.StubOutput;
 
+import java.time.LocalDateTime;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 class StartUITest {
 
+    private static final LocalDateTime DEFAULT_DATE =
+            LocalDateTime.of(2023, 9, 12, 12, 0, 0, 0);
+
+    private static final String LINE_SEPARATOR = System.lineSeparator();
     private Output output;
 
     @BeforeEach
@@ -26,7 +32,7 @@ class StartUITest {
         Tracker tracker = new Tracker();
         UserAction[] actions = {
                 new CreateAction(output),
-                new ExitAction()
+                new ExitAction(output)
         };
         new StartUI(output).init(in, tracker, actions);
         assertThat(tracker.findAll()[0].getName()).isEqualTo("Item name");
@@ -40,7 +46,7 @@ class StartUITest {
         Input in = new StubInput(new String[]{"0", String.valueOf(item.getId()), replacedName, "1"});
         UserAction[] actions = {
                 new EditAction(output),
-                new ExitAction()
+                new ExitAction(output)
         };
         new StartUI(output).init(in, tracker, actions);
         assertThat(tracker.findById(item.getId()).getName()).isEqualTo(replacedName);
@@ -53,7 +59,7 @@ class StartUITest {
         Input in = new StubInput(new String[]{"0", String.valueOf(item.getId()), "1"});
         UserAction[] actions = {
                 new DeleteAction(output),
-                new ExitAction()
+                new ExitAction(output)
         };
         new StartUI(output).init(in, tracker, actions);
         assertThat(tracker.findById(item.getId())).isNull();
@@ -66,14 +72,290 @@ class StartUITest {
         );
         Tracker tracker = new Tracker();
         UserAction[] actions = {
-                new ExitAction()
+                new ExitAction(output)
         };
         new StartUI(output).init(in, tracker, actions);
         assertThat(output.toString()).isEqualTo(
-                System.lineSeparator()
-                        + "Menu:" + System.lineSeparator()
-                        + "0. Exit" + System.lineSeparator()
-                + System.lineSeparator()
+                LINE_SEPARATOR
+                        + "Menu:"
+                        + LINE_SEPARATOR
+                        + "0. Exit"
+                        + LINE_SEPARATOR
+                        + LINE_SEPARATOR
+                        + "=== Exit ==="
+                + LINE_SEPARATOR
+        );
+    }
+
+    @Test
+    public void whenEditItemTestOutputIsSuccessfully() {
+        Tracker tracker = new Tracker();
+        Item one = tracker.add(new Item("test1"));
+        String replaceName = "New Test Name";
+        Input in = new StubInput(
+                new String[] {"0", String.valueOf(one.getId()), replaceName, "1"}
+        );
+        UserAction[] actions = new UserAction[]{
+                new EditAction(output),
+                new ExitAction(output)
+        };
+        new StartUI(output).init(in, tracker, actions);
+        assertThat(output.toString()).isEqualTo(
+                LINE_SEPARATOR
+                        + "Menu:"
+                        + LINE_SEPARATOR
+                        + "0. Edit item"
+                        + LINE_SEPARATOR
+                        + "1. Exit"
+                        + LINE_SEPARATOR
+                        + LINE_SEPARATOR
+                        + "=== Edit item ==="
+                        + LINE_SEPARATOR
+                        + "Заявка изменена успешно."
+                        + LINE_SEPARATOR
+                        + LINE_SEPARATOR
+                        + "Menu:"
+                        + LINE_SEPARATOR
+                        + "0. Edit item"
+                        + LINE_SEPARATOR
+                        + "1. Exit"
+                        + LINE_SEPARATOR
+                        + LINE_SEPARATOR
+                        + "=== Exit ==="
+                        + LINE_SEPARATOR
+        );
+    }
+
+    @Test
+    public void whenShowAllItemsTestOutputIsSuccessfully() {
+        Tracker tracker = new Tracker();
+        tracker.add(new Item("test", DEFAULT_DATE));
+        Input in = new StubInput(
+                new String[] {"0", "1"}
+        );
+        UserAction[] actions = new UserAction[]{
+                new ShowAllIAction(output),
+                new ExitAction(output)
+        };
+
+        new StartUI(output).init(in, tracker, actions);
+        assertThat(output.toString()).isEqualTo(
+                LINE_SEPARATOR
+                        + "Menu:"
+                        + LINE_SEPARATOR
+                        + "0. Show all items"
+                        + LINE_SEPARATOR
+                        + "1. Exit"
+                        + LINE_SEPARATOR
+                        + LINE_SEPARATOR
+                        + "=== Show all items ==="
+                        + LINE_SEPARATOR
+                        + "Item{id=1, name='test', created=12-сентября-вторник-2023 12:00:00}"
+                        + LINE_SEPARATOR
+                        + LINE_SEPARATOR
+                        + "Menu:"
+                        + LINE_SEPARATOR
+                        + "0. Show all items"
+                        + LINE_SEPARATOR
+                        + "1. Exit"
+                        + LINE_SEPARATOR
+                        + LINE_SEPARATOR
+                        + "=== Exit ==="
+                        + LINE_SEPARATOR
+        );
+    }
+
+    @Test
+    public void whenShowAllItemsTestOutputIsSuccessfullyWithoutItems() {
+        Tracker tracker = new Tracker();
+        Input in = new StubInput(
+                new String[] {"0", "1"}
+        );
+        UserAction[] actions = new UserAction[]{
+                new ShowAllIAction(output),
+                new ExitAction(output)
+        };
+
+        new StartUI(output).init(in, tracker, actions);
+        assertThat(output.toString()).isEqualTo(
+                LINE_SEPARATOR
+                        + "Menu:"
+                        + LINE_SEPARATOR
+                        + "0. Show all items"
+                        + LINE_SEPARATOR
+                        + "1. Exit"
+                        + LINE_SEPARATOR
+                        + LINE_SEPARATOR
+                        + "=== Show all items ==="
+                        + LINE_SEPARATOR
+                        + "Хранилище еще не содержит заявок"
+                        + LINE_SEPARATOR
+                        + LINE_SEPARATOR
+                        + "Menu:"
+                        + LINE_SEPARATOR
+                        + "0. Show all items"
+                        + LINE_SEPARATOR
+                        + "1. Exit"
+                        + LINE_SEPARATOR
+                        + LINE_SEPARATOR
+                        + "=== Exit ==="
+                        + LINE_SEPARATOR
+        );
+    }
+
+    @Test
+    public void whenShowAllByNameItemTestOutputIsSuccessfully() {
+        Tracker tracker = new Tracker();
+        tracker.add(new Item("test", DEFAULT_DATE));
+        Input in = new StubInput(
+                new String[] {"0", "test", "1"}
+        );
+        UserAction[] actions = new UserAction[]{
+                new ShowAllByNameAction(output),
+                new ExitAction(output)
+        };
+
+        new StartUI(output).init(in, tracker, actions);
+        assertThat(output.toString()).isEqualTo(
+                LINE_SEPARATOR
+                        + "Menu:"
+                        + LINE_SEPARATOR
+                        + "0. Show all items by name"
+                        + LINE_SEPARATOR
+                        + "1. Exit"
+                        + LINE_SEPARATOR
+                        + LINE_SEPARATOR
+                        + "=== Show all items by name ==="
+                        + LINE_SEPARATOR
+                        + "Item{id=1, name='test', created=12-сентября-вторник-2023 12:00:00}"
+                        + LINE_SEPARATOR
+                        + LINE_SEPARATOR
+                        + "Menu:"
+                        + LINE_SEPARATOR
+                        + "0. Show all items by name"
+                        + LINE_SEPARATOR
+                        + "1. Exit"
+                        + LINE_SEPARATOR
+                        + LINE_SEPARATOR
+                        + "=== Exit ==="
+                        + LINE_SEPARATOR
+        );
+    }
+
+    @Test
+    public void whenShowAllByNameItemTestOutputIsWithoutItems() {
+        Tracker tracker = new Tracker();
+        tracker.add(new Item("test", DEFAULT_DATE));
+        Input in = new StubInput(
+                new String[] {"0", "test1", "1"}
+        );
+        UserAction[] actions = new UserAction[]{
+                new ShowAllByNameAction(output),
+                new ExitAction(output)
+        };
+
+        new StartUI(output).init(in, tracker, actions);
+        assertThat(output.toString()).isEqualTo(
+                LINE_SEPARATOR
+                        + "Menu:"
+                        + LINE_SEPARATOR
+                        + "0. Show all items by name"
+                        + LINE_SEPARATOR
+                        + "1. Exit"
+                        + LINE_SEPARATOR
+                        + LINE_SEPARATOR
+                        + "=== Show all items by name ==="
+                        + LINE_SEPARATOR
+                        + "Заявки с именем: test1 ,не найдены."
+                        + LINE_SEPARATOR
+                        + LINE_SEPARATOR
+                        + "Menu:"
+                        + LINE_SEPARATOR
+                        + "0. Show all items by name"
+                        + LINE_SEPARATOR
+                        + "1. Exit"
+                        + LINE_SEPARATOR
+                        + LINE_SEPARATOR
+                        + "=== Exit ==="
+                        + LINE_SEPARATOR
+        );
+    }
+
+    @Test
+    public void whenShowByIdItemTestOutputIsSuccessfully() {
+        Tracker tracker = new Tracker();
+        Item item = tracker.add(new Item("test", DEFAULT_DATE));
+        Input in = new StubInput(
+                new String[] {"0", String.valueOf(item.getId()), "1"}
+        );
+        UserAction[] actions = new UserAction[]{
+                new ShowByIdAction(output),
+                new ExitAction(output)
+        };
+
+        new StartUI(output).init(in, tracker, actions);
+        assertThat(output.toString()).isEqualTo(
+                LINE_SEPARATOR
+                        + "Menu:"
+                        + LINE_SEPARATOR
+                        + "0. Show item by id"
+                        + LINE_SEPARATOR
+                        + "1. Exit"
+                        + LINE_SEPARATOR
+                        + LINE_SEPARATOR
+                        + "=== Show item by id ==="
+                        + LINE_SEPARATOR
+                        + "Item{id=1, name='test', created=12-сентября-вторник-2023 12:00:00}"
+                        + LINE_SEPARATOR
+                        + LINE_SEPARATOR
+                        + "Menu:"
+                        + LINE_SEPARATOR
+                        + "0. Show item by id"
+                        + LINE_SEPARATOR
+                        + "1. Exit"
+                        + LINE_SEPARATOR
+                        + LINE_SEPARATOR
+                        + "=== Exit ==="
+                        + LINE_SEPARATOR
+        );
+    }
+
+    @Test
+    public void whenShowByIdItemTestOutputIsWithoutItems() {
+        Tracker tracker = new Tracker();
+        tracker.add(new Item("test", DEFAULT_DATE));
+        Input in = new StubInput(
+                new String[] {"0", String.valueOf(2), "1"}
+        );
+        UserAction[] actions = new UserAction[]{
+                new ShowByIdAction(output),
+                new ExitAction(output)
+        };
+
+        new StartUI(output).init(in, tracker, actions);
+        assertThat(output.toString()).isEqualTo(
+                LINE_SEPARATOR
+                        + "Menu:"
+                        + LINE_SEPARATOR
+                        + "0. Show item by id"
+                        + LINE_SEPARATOR
+                        + "1. Exit"
+                        + LINE_SEPARATOR
+                        + LINE_SEPARATOR
+                        + "=== Show item by id ==="
+                        + LINE_SEPARATOR
+                        + "Заявка с введенным id: 2 ,не найдена."
+                        + LINE_SEPARATOR
+                        + LINE_SEPARATOR
+                        + "Menu:"
+                        + LINE_SEPARATOR
+                        + "0. Show item by id"
+                        + LINE_SEPARATOR
+                        + "1. Exit"
+                        + LINE_SEPARATOR
+                        + LINE_SEPARATOR
+                        + "=== Exit ==="
+                        + LINE_SEPARATOR
         );
     }
 }
