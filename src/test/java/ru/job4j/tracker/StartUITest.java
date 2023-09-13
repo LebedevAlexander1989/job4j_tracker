@@ -150,7 +150,7 @@ class StartUITest {
                         + LINE_SEPARATOR
                         + "=== Show all items ==="
                         + LINE_SEPARATOR
-                        + "Item{id=1, name='test', created=12-сентября-вторник-2023 12:00:00}"
+                        + "Item{id=1, name='test', created=12-09-2023 12:00:00}"
                         + LINE_SEPARATOR
                         + LINE_SEPARATOR
                         + "Menu:"
@@ -227,7 +227,7 @@ class StartUITest {
                         + LINE_SEPARATOR
                         + "=== Show all items by name ==="
                         + LINE_SEPARATOR
-                        + "Item{id=1, name='test', created=12-сентября-вторник-2023 12:00:00}"
+                        + "Item{id=1, name='test', created=12-09-2023 12:00:00}"
                         + LINE_SEPARATOR
                         + LINE_SEPARATOR
                         + "Menu:"
@@ -305,7 +305,7 @@ class StartUITest {
                         + LINE_SEPARATOR
                         + "=== Show item by id ==="
                         + LINE_SEPARATOR
-                        + "Item{id=1, name='test', created=12-сентября-вторник-2023 12:00:00}"
+                        + "Item{id=1, name='test', created=12-09-2023 12:00:00}"
                         + LINE_SEPARATOR
                         + LINE_SEPARATOR
                         + "Menu:"
