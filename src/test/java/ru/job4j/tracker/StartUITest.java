@@ -9,15 +9,9 @@ import ru.job4j.tracker.model.Item;
 import ru.job4j.tracker.output.Output;
 import ru.job4j.tracker.output.StubOutput;
 
-import java.time.LocalDateTime;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 class StartUITest {
-
-    private static final LocalDateTime DEFAULT_DATE =
-            LocalDateTime.of(2023, 9, 12, 12, 0, 0, 0);
-
     private static final String LINE_SEPARATOR = System.lineSeparator();
     private Output output;
 
@@ -129,7 +123,7 @@ class StartUITest {
     @Test
     public void whenShowAllItemsTestOutputIsSuccessfully() {
         Tracker tracker = new Tracker();
-        tracker.add(new Item("test", DEFAULT_DATE));
+        Item item = tracker.add(new Item("test"));
         Input in = new StubInput(
                 new String[] {"0", "1"}
         );
@@ -150,7 +144,7 @@ class StartUITest {
                         + LINE_SEPARATOR
                         + "=== Show all items ==="
                         + LINE_SEPARATOR
-                        + "Item{id=1, name='test', created=12-09-2023 12:00:00}"
+                        + item
                         + LINE_SEPARATOR
                         + LINE_SEPARATOR
                         + "Menu:"
@@ -206,7 +200,7 @@ class StartUITest {
     @Test
     public void whenShowAllByNameItemTestOutputIsSuccessfully() {
         Tracker tracker = new Tracker();
-        tracker.add(new Item("test", DEFAULT_DATE));
+        Item item = tracker.add(new Item("test"));
         Input in = new StubInput(
                 new String[] {"0", "test", "1"}
         );
@@ -227,7 +221,7 @@ class StartUITest {
                         + LINE_SEPARATOR
                         + "=== Show all items by name ==="
                         + LINE_SEPARATOR
-                        + "Item{id=1, name='test', created=12-09-2023 12:00:00}"
+                        + item
                         + LINE_SEPARATOR
                         + LINE_SEPARATOR
                         + "Menu:"
@@ -245,7 +239,7 @@ class StartUITest {
     @Test
     public void whenShowAllByNameItemTestOutputIsWithoutItems() {
         Tracker tracker = new Tracker();
-        tracker.add(new Item("test", DEFAULT_DATE));
+        tracker.add(new Item("test"));
         Input in = new StubInput(
                 new String[] {"0", "test1", "1"}
         );
@@ -284,7 +278,7 @@ class StartUITest {
     @Test
     public void whenShowByIdItemTestOutputIsSuccessfully() {
         Tracker tracker = new Tracker();
-        Item item = tracker.add(new Item("test", DEFAULT_DATE));
+        Item item = tracker.add(new Item("test"));
         Input in = new StubInput(
                 new String[] {"0", String.valueOf(item.getId()), "1"}
         );
@@ -305,7 +299,7 @@ class StartUITest {
                         + LINE_SEPARATOR
                         + "=== Show item by id ==="
                         + LINE_SEPARATOR
-                        + "Item{id=1, name='test', created=12-09-2023 12:00:00}"
+                        + item
                         + LINE_SEPARATOR
                         + LINE_SEPARATOR
                         + "Menu:"
@@ -323,7 +317,7 @@ class StartUITest {
     @Test
     public void whenShowByIdItemTestOutputIsWithoutItems() {
         Tracker tracker = new Tracker();
-        tracker.add(new Item("test", DEFAULT_DATE));
+        tracker.add(new Item("test"));
         Input in = new StubInput(
                 new String[] {"0", String.valueOf(2), "1"}
         );

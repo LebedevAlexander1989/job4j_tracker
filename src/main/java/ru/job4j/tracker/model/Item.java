@@ -2,13 +2,15 @@ package ru.job4j.tracker.model;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 public class Item {
 
-    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+    private static final DateTimeFormatter FORMATTER =
+            DateTimeFormatter.ofPattern("dd-MMMM-EEEE-yyyy HH:mm:ss", Locale.ENGLISH);
     private int id;
     private String name;
-    private LocalDateTime created;
+    private LocalDateTime created = LocalDateTime.now();
 
     public Item() {
 
@@ -17,11 +19,6 @@ public class Item {
     public Item(String name) {
         this.name = name;
         this.created = LocalDateTime.now();
-    }
-
-    public Item(String name, LocalDateTime created) {
-        this.name = name;
-        this.created = created;
     }
 
     public int getId() {
