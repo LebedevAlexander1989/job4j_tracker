@@ -77,7 +77,7 @@ class StartUITest {
                         + LINE_SEPARATOR
                         + LINE_SEPARATOR
                         + "=== Exit ==="
-                + LINE_SEPARATOR
+                        + LINE_SEPARATOR
         );
     }
 
@@ -346,6 +346,37 @@ class StartUITest {
                         + "0. Show item by id"
                         + LINE_SEPARATOR
                         + "1. Exit"
+                        + LINE_SEPARATOR
+                        + LINE_SEPARATOR
+                        + "=== Exit ==="
+                        + LINE_SEPARATOR
+        );
+    }
+
+    @Test
+    void whenInvalidExit() {
+        Output out = new StubOutput();
+        Input in = new StubInput(
+                new String[] {"-1", "0"}
+        );
+        Tracker tracker = new Tracker();
+        UserAction[] actions = new UserAction[]{
+                new ExitAction(out)
+        };
+        new StartUI(out).init(in, tracker, actions);
+        assertThat(out.toString()).isEqualTo(
+                LINE_SEPARATOR
+                        + "Menu:"
+                        + LINE_SEPARATOR
+                        + "0. Exit"
+                        + LINE_SEPARATOR
+                        + LINE_SEPARATOR
+                        + "Неверный ввод, вы можете выбрать: 0 .. 0"
+                        + LINE_SEPARATOR
+                        + LINE_SEPARATOR
+                        + "Menu:"
+                        + LINE_SEPARATOR
+                        + "0. Exit"
                         + LINE_SEPARATOR
                         + LINE_SEPARATOR
                         + "=== Exit ==="
