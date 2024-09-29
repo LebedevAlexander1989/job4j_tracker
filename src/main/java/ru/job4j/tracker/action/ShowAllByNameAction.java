@@ -5,6 +5,8 @@ import ru.job4j.tracker.Input;
 import ru.job4j.tracker.model.Item;
 import ru.job4j.tracker.Output;
 
+import java.util.List;
+
 public class ShowAllByNameAction implements UserAction {
 
     private final Output output;
@@ -22,8 +24,8 @@ public class ShowAllByNameAction implements UserAction {
     public boolean execute(Input input, Tracker tracker) {
         output.println("=== Show all items by name ===");
         String name = input.askStr("Enter name: ");
-        Item[] items = tracker.findByName(name);
-        if (items.length > 0) {
+        List<Item> items = tracker.findByName(name);
+        if (items.size() > 0) {
             for (Item item : items) {
                 output.println(item);
             }
