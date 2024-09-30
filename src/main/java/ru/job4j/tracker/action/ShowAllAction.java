@@ -7,11 +7,11 @@ import ru.job4j.tracker.Output;
 
 import java.util.List;
 
-public class ShowAllIAction implements UserAction {
+public class ShowAllAction implements UserAction {
 
     private final Output output;
 
-    public ShowAllIAction(Output output) {
+    public ShowAllAction(Output output) {
         this.output = output;
     }
 
