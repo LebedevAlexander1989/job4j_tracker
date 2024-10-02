@@ -60,6 +60,7 @@ public class Tracker {
         for (int i = 0; i < items.size(); i++) {
             if (items.get(i).getId() == id) {
                 rsl = i;
+                break;
             }
         }
         return rsl;
