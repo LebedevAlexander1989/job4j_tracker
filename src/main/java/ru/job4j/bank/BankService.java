@@ -14,15 +14,7 @@ public class BankService {
     }
 
     public void deleteUser(String passport) {
-        User user = null;
-        for (User u: users.keySet()) {
-            if (u.getPassport().equals(passport)) {
-                user = u;
-            }
-        }
-        if (user != null) {
-            users.remove(user);
-        }
+        users.remove(new User(passport, ""));
     }
 
     public void addAccount(String passport, Account account) {
@@ -66,15 +58,10 @@ public class BankService {
         Account destinationAccount = findByRequisite(destinationPassport, destinationRequisite);
 
         if (sourceAccount != null && destinationAccount != null) {
-            double sourceBalance = sourceAccount.getBalance();
-            if (sourceBalance >= amount) {
-                sourceBalance -= amount;
+            if (sourceAccount.getBalance() >= amount) {
+                sourceAccount.setBalance(sourceAccount.getBalance() - amount);
+                destinationAccount.setBalance(destinationAccount.getBalance() + amount);
 
-                double destinationBalance = destinationAccount.getBalance();
-                destinationBalance += amount;
-
-                sourceAccount.setBalance(sourceBalance);
-                destinationAccount.setBalance(destinationBalance);
                 result = true;
             }
         }
