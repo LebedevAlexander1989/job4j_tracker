@@ -4,7 +4,6 @@ import java.util.*;
 
 public class Departments {
 
-    // K1/SK1/SSK1
     public static List<String> fillGaps(List<String> departments) {
         Set<String> temp = new LinkedHashSet<>();
         for (String value : departments) {
