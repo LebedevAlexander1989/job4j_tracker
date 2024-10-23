@@ -9,17 +9,7 @@ public class DepartmentsDescComparator implements Comparator<String> {
         String[] leftStrings = left.split("/");
         String[] rightStrings = right.split("/");
 
-        if (leftStrings[0].compareTo(rightStrings[0]) == 0) {
-            for (int i = 1; i < Math.min(leftStrings.length, rightStrings.length); i++) {
-                if (leftStrings[i].compareTo(rightStrings[i]) != 0) {
-                    return leftStrings[i].compareTo(rightStrings[i]);
-                }
-            }
-
-            if (leftStrings.length != rightStrings.length) {
-                return Integer.compare(leftStrings.length, rightStrings.length);
-            }
-        }
-        return rightStrings[0].compareTo(leftStrings[0]);
+        int result = rightStrings[0].compareTo(leftStrings[0]);
+        return result != 0 ? result : left.compareTo(right);
     }
 }
