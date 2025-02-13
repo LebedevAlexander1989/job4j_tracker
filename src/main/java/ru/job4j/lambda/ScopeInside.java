@@ -7,16 +7,6 @@ import static ru.job4j.lambda.ThrowingExceptionConsumer.throwingExceptionConsume
 
 public class ScopeInside {
     public static void main(String[] args) {
-//        String ayyyy = "ayyyyy";
-//        ayyyy = "aaaaa";
-//        String temp = ayyyy;
-//        String name = echo(
-//                () -> {
-//                    return temp;
-//                }
-//        );
-//        System.out.println(ayyyy);
-//        System.out.println(name);
         List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5);
         numbers.forEach(throwingExceptionConsumerWrapper(ScopeInside::methodThrowingAnException));
 
